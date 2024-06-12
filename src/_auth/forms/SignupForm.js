@@ -7,13 +7,35 @@ import registerSchema from '../../schemas/register'
 import Logo from '../../images/logoApp.png'
 
 const SignupForm = () => {
-  const selectSchema = () => {
-    const isMobile = window.innerWidth >= 399; // Kích thước màn hình để xác định mobile
-    console.log(isMobile)
-    return isMobile
-  }
+  // const selectSchema = () => {
+  //   const isMobile = window.innerWidth >= 399; // Kích thước màn hình để xác định mobile
+  //   console.log(isMobile)
+  //   return isMobile
+  // }
+  const [isLab, setIsLab] = useState(true)
+  
+
+useEffect(() => {
+    const handleResize = () => {
+      const isLabPre = isLab;
+      setIsLab(window.innerWidth > 399);
+      if (isLabPre !== isLab) {
+        // Reload trang web
+        window.location.reload();
+      }
+     
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+    window.removeEventListener('resize', handleResize);
+    };
+}, [isLab])
+
+
 
   const [sta, setSta] = useState(true)
+
+
   const {
     register,
     handleSubmit,
@@ -93,7 +115,7 @@ const SignupForm = () => {
 
   return (
     <>
-      {selectSchema()?(
+      {isLab ? (
       <div
         className="md:absolute inset-0 flex items-center justify-center sm:hidden"
         style={{ background: 'rgba(255, 255, 255, .3)' }}

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -12,11 +12,25 @@ import Logo from '../../images/logoApp.png'
 
 
 function SigninForm() {
-const selectSchema = () => {
-  const isMobile = window.innerWidth >= 399; // Kích thước màn hình để xác định mobile
-  console.log(isMobile)
-  return isMobile
-}
+
+  const [isLab, setIsLab] = useState(true)
+  const [isLabPre, setIsLabPre] = useState(true)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLabPre(isLab)
+      setIsLab(window.innerWidth > 399);
+      if (isLabPre !== isLab) {
+        // Reload trang web
+        window.location.reload();
+      }
+     
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+    window.removeEventListener('resize', handleResize);
+    };
+}, [])
 
   const {
     register,
@@ -86,7 +100,7 @@ const selectSchema = () => {
 
   return (
     <>
-      {selectSchema()?(<div
+      {isLab? (<div
         className='md:absolute inset-0 flex items-center justify-center sm:hidden'
         style={{ background: 'rgba(255, 255, 255, .3)' }}
       >
@@ -270,7 +284,6 @@ const selectSchema = () => {
           <div className="absolute w-[40%] h-[0.5%] left-[30%] top-[98%] bg-black rounded-[2.5px] opacity-80"></div>
         </div>
       </div>)}
-
     </>
   )
 }
