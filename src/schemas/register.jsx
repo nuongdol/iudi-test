@@ -31,3 +31,10 @@ const registerSchema = Joi.object({
 })
 
 export default registerSchema
+
+
+
+
+
+
+
