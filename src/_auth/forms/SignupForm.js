@@ -102,7 +102,6 @@ const SignupForm = () => {
 
   return (
     <>
-      
         {isLab ?(<div
           className="md:absolute inset-0 flex items-center justify-center sm:hidden"
           style={{ background: 'rgba(255, 255, 255, .3)' }}
