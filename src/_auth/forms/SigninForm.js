@@ -14,23 +14,19 @@ import Logo from '../../images/logoApp.png'
 function SigninForm() {
 
   const [isLab, setIsLab] = useState(true)
-  const [isLabPre, setIsLabPre] = useState(true)
+
 
   useEffect(() => {
+    setIsLab(window.innerWidth > 399)
     const handleResize = () => {
-      setIsLabPre(isLab)
-      setIsLab(window.innerWidth > 399);
-      if (isLabPre !== isLab) {
-        // Reload trang web
-        window.location.reload();
-      }
-     
-    };
+      window.location.reload();
+    }
     window.addEventListener('resize', handleResize);
     return () => {
-    window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleResize);
     };
-}, [])
+
+  }, [isLab])
 
   const {
     register,
@@ -100,7 +96,7 @@ function SigninForm() {
 
   return (
     <>
-      {isLab? (<div
+      {isLab ? (<div
         className='md:absolute inset-0 flex items-center justify-center sm:hidden'
         style={{ background: 'rgba(255, 255, 255, .3)' }}
       >
@@ -109,7 +105,6 @@ function SigninForm() {
             onSubmit={handleSubmit(handleLogin)}
             className='px-8 pt-6 pb-8 mb-4 rounded '
           >
-            {/* <ToastContainer/> */}
             <h3
               style={{
                 color: 'rgba(44,186,55,0.8127626050420168)',
@@ -198,92 +193,95 @@ function SigninForm() {
             </p>
           </form>
         </div>
-      </div>):(<div className="absolute inset-0 flex items-center justify-center bg-[rgba(255,255,255,0.3)] md:hidden">
-        <div className="relative w-full h-full bg-white overflow-hidden">
-          <div className="absolute top-[0] left[0] w-[100%] h-[45%] bg-white overflow-hidden">
-            <div className='absolute w-[130%] h-[145%] top-[-54%] left-[-40%] -mt-20 -ml-1' style={{
-              borderRadius: "50%",
-              backgroundColor: "rgba(0,135,72,0.7)",
-            }}></div>
-            <div className="absolute w-[60%] h-[40%] left-[10%] top-[25%] -mt-6">
-              <img src={Logo} alt="Your" className='w-[90%]' />
-            </div>
-            <p className="absolute text-white font-light text-[18px] leading-[90%] tracking-[-90%] text-center w-[90%] h-[100%] top-[60%] left-[-15%] -mt-14">
-              Kết nối yêu thương
-            </p>
-            <div className="absolute w-[70%] h-[70%] top-[-16%] left-[60%] mr-8 mt-3" style={{
-              borderRadius: "50%",
-              backgroundColor: "rgba(20,145,87,0.9)",
-            }}></div>
-          </div>
-          <div className="relative mr-8 h-[30%] left-[5%] top-[42%] -mt-20 " >
-            <form onSubmit={handleSubmit(handleLogin)}>
-              <div className="mb-1">
-                <label className="block font-bold text-black text-sm py-1" htmlFor="UserName">Họ tên</label>
-                <input
-                  className="w-full px-2 py-1 border-2 border-gray-300 rounded-full focus:outline-none focus:shadow-outline"
-                  id="UserName"
-                  type="text"
-                  placeholder="Họ tên"
-                  name="Username"
-                  {...register('Username')}
-                />
-                {errors.Username && (
-                  <p className='mt-2 text-sm font-bold text-red-500'>
-                    {' '}
-                    {errors.Username.message}{' '}
-                  </p>
-                )}
+      </div>):
+      
+      (<div className="sm : absolute inset-0 flex items-center justify-center bg-[rgba(255,255,255,0.3)] md:hidden">
+          <div className="relative w-full h-full bg-white overflow-hidden">
+            <div className="absolute top-[0] left[0] w-[100%] h-[45%] bg-white overflow-hidden">
+              <div className='absolute w-[130%] h-[145%] top-[-54%] left-[-40%] -mt-20 -ml-1' style={{
+                borderRadius: "50%",
+                backgroundColor: "rgba(0,135,72,0.7)",
+              }}></div>
+              <div className="absolute w-[60%] h-[40%] left-[10%] top-[25%] -mt-6">
+                <img src={Logo} alt="Your" className='w-[90%]' />
               </div>
-              <div className="mb-1">
-                <label className="block py-1 font-bold text-black text-sm" htmlFor="Password">Mật khẩu</label>
-                <input
-                  className="w-full px-2 py-1 border-2 border-gray-300 rounded-full focus:outline-none focus:shadow-outline"
-                  id="Password"
-                  type="password"
-                  placeholder="Password"
-                  name="Password"
-                  {...register('Password')}
-                />
-                {errors.PasswordMobile && (
-                  <p className="mt-2 text-sm font-bold text-red-500">{errors.PasswordMobile.message}</p>
-                )}
-              </div>
-              <div className="mb-1 py-1 flex items-start">
-                <div className="flex items-center h-5">
-                  <input
-                    type="checkbox"
-                    id="remember"
-                    className="w-4 h-4 border border-black rounded bg-gray-50 focus:ring-3 
-                     focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required=""
-                  />
-                </div>
-                <div className="ml-1 text-sm">
-                  <label className="block font-bold text-black text-sm" htmlFor="remember"><small>Ghi nhớ mật khẩu</small></label>
-                </div>
-              </div>
-              <div className="mb-1 mt-5">
-                <button
-                  className="w-full px-2 py-1 font-bold text-white rounded-full focus:outline-none focus:shadow-outline"
-                  style={{ background: 'rgba(0, 135, 72, 1)' }}
-                  type="submit">Đăng nhập</button>
-              </div>
-            </form>
-          </div>
-          <div className="absolute w-[70%] h-[10%] left-[15%] top-[90%] font-medium text-sm leading-[21px]">
-            <div className="mb-16 -ml-4">
-              <p className="text-sm text-center mb-4 text-black">
-                Bạn chưa có tài khoản?{' '}
-                <a href="/register" className="text-500">
-                  <strong className="text-[rgba(0,135,72,1)]">Đăng ký</strong>
-                </a>
+              <p className="absolute text-white font-light text-[18px] leading-[90%] tracking-[-90%] text-center w-[90%] h-[100%] top-[60%] left-[-15%] -mt-14">
+                Kết nối yêu thương
               </p>
+              <div className="absolute w-[70%] h-[70%] top-[-16%] left-[60%] mr-8 mt-3" style={{
+                borderRadius: "50%",
+                backgroundColor: "rgba(20,145,87,0.9)",
+              }}></div>
             </div>
+            <div className="relative mr-8 h-[30%] left-[5%] top-[42%] -mt-20 " >
+              <form onSubmit={handleSubmit(handleLogin)} className="px-8 pt-6 pb-8 mb-4 rounded">
+                <div className="mb-1">
+                  <label className="block font-bold text-black text-sm py-1" htmlFor="Username">Họ tên</label>
+                  <input
+                    className="w-full px-2 py-1 border-2 border-gray-300 rounded-full focus:outline-none focus:shadow-outline"
+                    id="Username"
+                    type="text"
+                    placeholder="Họ tên"
+                    name="Username"
+                    {...register('Username')}
+                  />
+                  {errors.Username && (
+                    <p className='mt-2 text-sm font-bold text-red-500'>
+                      {' '}
+                      {errors.Username.message}{' '}
+                    </p>
+                  )}
+                </div>
+                <div className="mb-1">
+                  <label className="block py-1 font-bold text-black text-sm" htmlFor="Password">Mật khẩu</label>
+                  <input
+                    className="w-full px-2 py-1 border-2 border-gray-300 rounded-full focus:outline-none focus:shadow-outline"
+                    id="Password"
+                    type="password"
+                    placeholder="Password"
+                    name="Password"
+                    {...register('Password')}
+                  />
+                  {errors.Password && (
+                    <p className="mt-2 text-sm font-bold text-red-500">{' '}{errors.Password.message}{' '}</p>
+                  )}
+                </div>
+                <div className="mb-1 py-1 flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      className="w-4 h-4 border border-black rounded bg-gray-50 focus:ring-3 
+                     focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                      required=""
+                    />
+                  </div>
+                  <div className="ml-1 text-sm">
+                    <label className="block font-bold text-black text-sm" htmlFor="remember"><small>Ghi nhớ mật khẩu</small></label>
+                  </div>
+                </div>
+                <div className="mb-1 mt-5">
+                  <button
+                    className="w-full px-2 py-1 font-bold text-white rounded-full focus:outline-none focus:shadow-outline"
+                    style={{ background: 'rgba(0, 135, 72, 1)' }}
+                    type="submit">Đăng nhập
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div className="absolute w-[70%] h-[10%] left-[15%] top-[90%] font-medium text-sm leading-[21px]">
+              <div className="mb-16 -ml-4">
+                <p className="text-sm text-center mb-4 text-black">
+                  Bạn chưa có tài khoản?{' '}
+                  <a href="/register" className="text-500">
+                    <strong className="text-[rgba(0,135,72,1)]">Đăng ký</strong>
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div className="absolute w-[40%] h-[0.5%] left-[30%] top-[98%] bg-black rounded-[2.5px] opacity-80"></div>
           </div>
-          <div className="absolute w-[40%] h-[0.5%] left-[30%] top-[98%] bg-black rounded-[2.5px] opacity-80"></div>
-        </div>
-      </div>)}
+        </div>)}
     </>
   )
 }

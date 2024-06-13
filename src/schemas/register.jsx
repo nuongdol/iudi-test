@@ -24,7 +24,7 @@ const registerSchema = Joi.object({
 
     LastLoginIP :Joi.string().required(),
     avatarLink: Joi.string().required(),
-    Cf_Password: Joi.valid(Joi.ref('Password')).messages({
+    Cf_Password: Joi.valid(Joi.ref('Password')).required().messages({
         'any.only':'Password no match!'
     })
 
