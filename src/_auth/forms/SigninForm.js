@@ -9,10 +9,26 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import loginSchema from '../../schemas/login'
 import config from '../../configs/Configs.json'
+import Logo from '../../images/logoApp.png'
+
 
 const { LONGITUDE_DEFAULT, LATITUDE_DEFAULT, LAST_LOGIN_IP_DEFAULT } = config
 
 function SigninForm() {
+  
+  // const [isLab, setIsLab] = useState(true)
+  // useEffect(() => {
+  //   setIsLab(window.innerWidth > 399)
+  //   const handleResize = () => {
+  //     window.location.reload();
+  //   }
+  //   window.addEventListener('resize', handleResize);
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+
+  // }, [isLab])
+
  const {
   register,
   handleSubmit,
@@ -81,8 +97,9 @@ function SigninForm() {
  }
 
  return (
+  <>
   <div
-   className='absolute inset-0 flex items-center justify-center'
+   className="md:absolute inset-0 flex items-center justify-center sm:hidden"
    style={{ background: 'rgba(255, 255, 255, .3)' }}
   >
    <div className='max-w-md w-full mx-auto border-2 border-green-400 rounded-[20px] bg-gray-900'>
@@ -180,6 +197,7 @@ function SigninForm() {
     </form>
    </div>
   </div>
+  </>
  )
 }
 export default SigninForm

@@ -7,6 +7,7 @@ import registerSchema from '../../schemas/register'
 
 const SignupForm = () => {
   const [sta, setSta] = useState(true)
+  
   const {
     register,
     handleSubmit,
